@@ -168,12 +168,30 @@
             h1 { font-size: 1.8rem; }
             .card-value { font-size: 1.1rem; }
         }
+        .logo-image {
+    width: 50px;           /* Adjust size as needed */
+    height: auto;          /* Maintains aspect ratio */
+    display: block;        /* Removes extra spacing */
+    margin: 0 auto;        /* Centers the image */
+    
+    /* Optional effects */
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    transition: transform 0.3s ease;
+}
+
+.logo-image:hover {
+    transform: scale(1.1);  /* Slight zoom on hover */
+}
     </style>
 </head>
 <body>
 
     <div id="splash-screen">
-        <div class="logo-3d"><img src="https://raw.githubusercontent.com/tahirrafique1-pixel/saatfinder/main/satalogo.png"></div>
+        <div class="logo-3d"><img src="https://raw.githubusercontent.com/tahirrafique1-pixel/saatfinder/main/satalogo.png"
+        alt="Sata Logo" 
+        class="logo-image"
+        id="main-logo">
+        </div>
         <h2 style="color: var(--gold); margin-top: 2rem; letter-spacing: 5px;">اسم اعظم</h2>
     </div>
 
