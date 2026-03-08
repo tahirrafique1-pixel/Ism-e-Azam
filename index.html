@@ -204,7 +204,7 @@
             </div>
 
             <div class="result-grid">
-<div class="card" style="grid-column: span 1; border-bottom-color: var(--gold);">
+                <div class="card" style="grid-column: span 1; border-bottom-color: var(--gold);">
                     <span class="card-label" style="color: var(--gold);">اسم اعظم</span> <br>
                     <div id="ism-e-azam" class="card-value" style="color: var(--gold-light);">-</div>            
                 </div>
@@ -388,11 +388,14 @@
                     for(let j=i+1; j<asmaUlHusna.length; j++) { if(asmaUlHusna[i].value + asmaUlHusna[j].value === val) {
                             matches = [asmaUlHusna[i], asmaUlHusna[j]];
                             break;
+                     for(let k=j+1; k<asmaUlHusna.length; k++) { if(asmaUlHusna[i].value + asmaUlHusna[j].value + asmaUlHusna[k].value === val) {
+                            matches = [asmaUlHusna[i], asmaUlHusna[j], asmaUlHusna[k]];
+                            break;   
                         }
-for(let k=j+1; k<asmaUlHusna.length; k++) { if(asmaUlHusna[i].value + asmaUlHusna[j].value + asmaUlHusna[k].value === val) {
+/*for(let k=j+1; k<asmaUlHusna.length; k++) { if(asmaUlHusna[i].value + asmaUlHusna[j].value + asmaUlHusna[k].value === val) {
                             matches = [asmaUlHusna[i], asmaUlHusna[j], asmaUlHusna[k]];
                             break;
-                        }
+                        }*/
 }
                     }
                     if(matches.length > 0) break;
