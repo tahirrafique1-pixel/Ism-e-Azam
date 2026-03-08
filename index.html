@@ -43,7 +43,7 @@
             width: 120px;
             height: 120px;
             background: linear-gradient(135deg, var(--gold), #8e6d13);
-            border-radius: 20px;
+            border-radius: 0px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -385,14 +385,16 @@
             // Logic: Simple Combination of 2
             if (matches.length === 0) {
                 for(let i=0; i<asmaUlHusna.length; i++) {
-                    for(let j=i+1; j<asmaUlHusna.length; j++) { if(asmaUlHusna[i].value + asmaUlHusna[j].value === val) {
+                    for(let j=i+1; j<asmaUlHusna.length; j++) { 
+                        if(asmaUlHusna[i].value + asmaUlHusna[j].value === val) {
                             matches = [asmaUlHusna[i], asmaUlHusna[j]];
-                            break;
-                     for(let k=j+1; k<asmaUlHusna.length; k++) { if(asmaUlHusna[i].value + asmaUlHusna[j].value + asmaUlHusna[k].value === val) {
+                            break;}
+                    for(let k=j+1; k<asmaUlHusna.length; k++) { 
+                        if(asmaUlHusna[i].value + asmaUlHusna[j].value + asmaUlHusna[k].value === val) {
                             matches = [asmaUlHusna[i], asmaUlHusna[j], asmaUlHusna[k]];
                             break;   
                         }
-/*for(let k=j+1; k<asmaUlHusna.length; k++) { if(asmaUlHusna[i].value + asmaUlHusna[j].value + asmaUlHusna[k].value === val) {
+                  /*for(let k=j+1; k<asmaUlHusna.length; k++) { if(asmaUlHusna[i].value + asmaUlHusna[j].value + asmaUlHusna[k].value === val) {
                             matches = [asmaUlHusna[i], asmaUlHusna[j], asmaUlHusna[k]];
                             break;
                         }
