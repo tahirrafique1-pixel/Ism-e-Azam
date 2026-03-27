@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اسم اعظم| Ism-e-Azam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        /* Default Dark Theme Variables */
+        :root {
+            --emerald-deep: #022c22;
+            --emerald-mid: #064e3b;
+            --emerald-light: #10b981;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --glass: rgba(255, 255, 255, 0.05);
+            --bg-gradient-start: #065f46;
+            --bg-gradient-end: #022c22;
+            --card-bg: rgba(2, 44, 34, 0.6);
+            --section-bg: rgba(2, 44, 34, 0.4);
+            --text-primary: #f0f0f0;
+            --text-secondary: #ddd;
+            --border-color: rgba(255,255,255,0.1);
+            --input-bg: rgba(0,0,0,0.3);
+            --card-gradient-start: rgba(255,255,255,0.08);
+            --card-gradient-end: rgba(255,255,255,0.02);
+        }
+
+        /* Light Theme Variables */
+        body.light-theme {
+            --emerald-deep: #e8f5e9;
+            --emerald-mid: #c8e6c9;
+            --emerald-light: #2e7d32;
+            --gold: #c9a03d;
+            --gold-light: #b8860b;
+            --glass: rgba(0, 0, 0, 0.03);
+            --bg-gradient-start: #f5f7fa;
+            --bg-gradient-end: #e8edf2;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --section-bg: rgba(255, 255, 255, 0.7);
+            --text-primary: #1a2a3a;
+            --text-secondary: #2c3e50;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --input-bg: rgba(255, 255, 255, 0.9);
+            --card-gradient-start: rgba(0, 0, 0, 0.02);
+            --card-gradient-end: rgba(0, 0, 0, 0.01);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: radial-gradient(circle at center, var(--bg-gradient-start), var(--bg-gradient-end));
+            font-family: 'Poppins', 'Noto Nastaliq Urdu', serif;
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: background 0.5s ease, color 0.3s ease;
+        }
+
+        /* Floating Theme Toggle Button */
+        .theme-toggle {
+            position: relative;
+            top: 50px;
+            right: 50px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            cursor: pointer;
+            display: fixed;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9998;
+            border: none;
+            font-size: 28px;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        /* Splash Screen */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-gradient-start);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-out;
+        }
+
+        .logo-3d {
+            width: 125px;
+            height: 125px;
+            background: linear-gradient(135deg, var(--gold), #8e6d13);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: pulse3d 2s infinite ease-in-out;
+        }
+
+        .logo-image {
+            width: 110px;
+            height: 110px;
+            display: block;
+            margin: 0;
+        }
+
+        @keyframes pulse3d {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Main Layout */
+        #main-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+            padding: 1rem 1rem;
+            max-width: 700px;
+            margin: auto;;
+        }
+
+        .hero-section {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        textarea {
+            width: 90%;
+            background: var(--input-bg);
+            border: 2px solid var(--emerald-light);
+            border-radius: 15px;
+            padding: 1rem;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-family: 'Noto Nastaliq Urdu';
+            text-align: center;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: linear-gradient(145deg, var(--card-gradient-start), var(--card-gradient-end));
+            padding: 1.2rem;
+            border-radius: 20px;
+            border-bottom: 3px solid var(--emerald-light);
+            transition: 0.4s;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-bottom-color: var(--gold);
+        }
+
+        .card-label {
+            font-size: 0.8rem;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .method-details {
+            font-size: 0.9rem;
+            text-align: right;
+            line-height: 1.8;
+        }
+
+        /* Triangle Section - 3x3 Grid */
+        .triangle-section {
+            background: var(--section-bg);
+            border-radius: 20px;
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .triangle-title {
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .triangle-subtitle {
+            color: var(--gold-light);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .calculation-info {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .calculation-info p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: var(--gold-light);
+        }
+
+        .magic-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .magic-grid.zoomed {
+            transform: scale(1.1);
+            cursor: zoom-out;
+        }
+
+        .grid-3x3 {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(3, 60px);
+            gap: 15px;
+            background: transparent;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .grid-cell {
+            background: linear-gradient(135deg, var(--gold), #b8860b);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: 'Noto Nastaliq Urdu', 'Poppins', monospace;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            position: relative;
+            padding: 10px;
+        }
+
+        .grid-cell:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
+
+        .cell-number {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #022c22;
+            line-height: 1;
+        }
+
+        .cell-label {
+            font-size: 0.7rem;
+            color: #022c22;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .grid-cell.empty {
+            background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(212,175,55,0.1));
+            border: 2px dashed var(--gold);
+        }
+
+        .grid-cell.empty .cell-number {
+            font-size: 1rem;
+            color: var(--gold);
+        }
+
+        .zoom-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.2rem 0;
+        }
+
+        .zoom-btn, .download-btn {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #022c22;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .zoom-btn:hover, .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .combination-section {
+            background: var(--section-bg);
+            border-radius: 15px;
+            padding: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .combination-title {
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--gold);
+            display: inline-block;
+        }
+
+        .combination-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .combination-item {
+            background: var(--glass);
+            border-radius: 15px;
+            padding: 1rem;
+        }
+
+        .combination-names {
+            color: var(--gold-light);
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            text-align: center;
+        }
+
+        .virtues-list {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 45px) {
+            .grid-3x3 {
+                grid-template-columns: repeat(3, 15px);
+                grid-template-rows: repeat(3, 15px);
+                gap: 2px;
+            }
+            .cell-number {
+                font-size: 1rem;
+            }
+            .cell-label {
+                font-size: 0.5rem;
+            }
+            h1 { font-size: 1.5rem; }
+            .magic-grid.zoomed {
+                transform: scale(0.5);
+            }
+        }
+
+        @media print {
+            .theme-toggle, .zoom-controls, .download-btn, .input-wrapper, .result-grid {
+                display: none;
+            }
+            .magic-grid {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <div id="splash-screen">
+        <div class="logo-3d">
+            <img src="https://raw.githubusercontent.com/tahirrafique1-pixel/Ism-e-Azam/main/ismLogo.png" class="logo-image">
+        </div>
+        <h2 style="color: var(--gold); margin-top: 2rem;">اسم اعظم</h2>
+    </div>
+
+    <div id="main-content">
+        <div class="hero-section">
+            <h1>اسمِ اعظم</h1>
+            <div class="input-wrapper">
+                <textarea id="urdu-input" placeholder="یہاں اپنا نام یا متن لکھیں..." rows="2"></textarea>
+            </div>
+            <div class="result-grid">
+                <div class="card"><span class="card-label">اسم اعظم</span><div id="ism-e-azam" class="card-value">-</div></div>
+                <div class="card"><span class="card-label">پڑھنے کا طریقہ</span><div id="recitation-method" class="card-value method-details">-</div></div>
+                <div class="card"><span class="card-label">کل حروف</span><div id="total-chars" class="card-value">0</div></div>
+                <div class="card"><span class="card-label">اعداد</span><div id="abjad-value" class="card-value">0</div></div>
+            </div>
+            <div id="virtues-container"></div>
+        </div>
+<div class="main-content">
+         <!-- Triangle Section - 3x3 Empty Center Grid -->
+        <div class="triangle-section" id="triangle-section">
+            <div class="triangle-title">🔺 نقش مثلث خالی البطن 🔺</div>
+            <div class="triangle-subtitle">(نقش 3x3 - مرکز خالی)</div>
+            
+            <div class="calculation-info" id="calc-info">
+                <p><strong>📊 طریقہ کار:</strong></p>
+                <p>کل عدد ÷ 12 = شمارکنندہ + باقی</p>
+                <p id="calc-demo">عدد درج کریں</p>
+            </div>
+            
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="zoomGrid()">🔍 زوم کریں</button>
+            </div>
+            <div class="magic-grid" id="magic-grid">
+                <div class="grid-3x3" id="triangle-grid">
+                    <!-- Grid will be populated by JavaScript -->
+                </div>
+            </div>
+            <button class="download-btn" id="download-pdf">📥 PDF ڈاؤن لوڈ کریں</button>
+        </div>
+    </div>
+</div>
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeToggle.innerHTML = '☀️';
+        }
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+            themeToggle.innerHTML = document.body.classList.contains('light-theme') ? '☀️' : '🌙';
+        });
+
+        // Convert to Persian/Arabic numbers
+        function toPersianNumber(num) {
+            const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
+            return num.toString().split('').map(d => persianDigits[d] || d).join('');
+        }
+
+        // Generate Magic Triangle Grid (3x3 with empty center)
+        // Correct order with Box 6 and Box 7 swapped:
+        // Row1: (1)=50, (8)=405, (3)=150
+        // Row2: (5)=250, (empty), (7)=355  <-- Box 7 moved here
+        // Row3: (6)=305, (4)=200, (2)=100  <-- Box 6 moved here
+        function generateMagicGrid(targetNumber) {
+            if (targetNumber === 0) return null;
+            
+            // Calculate: targetNumber ÷ 12
+            const quotient = Math.floor(targetNumber / 12);
+            const remainder = targetNumber % 12;
+            
+            // Update calculation display
+            const calcDemo = document.getElementById('calc-demo');
+            calcDemo.innerHTML = `${toPersianNumber(targetNumber)} ÷ ۱۲ = ${toPersianNumber(quotient)} (شمارکنندہ) + ${toPersianNumber(remainder)} (باقی)`;
+            
+            // Calculate values according to the pattern:
+            const values = {
+                '1': quotient * 1,                                    // 50
+                '8': (quotient * 8) + remainder,                      // 400+5=405
+                '3': quotient * 3,                                    // 150
+                '5': quotient * 5,                                    // 250
+                '7': (quotient * 7) + remainder,                      // 350+5=355 (Now in row2-col3)
+                '6': (quotient * 6) + remainder,                      // 300+5=305 (Now in row3-col1)
+                '4': quotient * 4,                                    // 200
+                '2': quotient * 2                                     // 100
+            };
+            
+            // Grid layout (3x3) - Correct order with Box 6 and Box 7 swapped
+            // Row 1: (1), (8), (3)
+            // Row 2: (5), empty, (7)  <-- Box 7 here
+            // Row 3: (6), (4), (2)    <-- Box 6 here
+            return [
+                { label: '(1)', value: values['1'], position: 'row1-col1' },
+                { label: '(8)', value: values['8'], position: 'row1-col2' },
+                { label: '(3)', value: values['3'], position: 'row1-col3' },
+                { label: '(5)', value: values['5'], position: 'row2-col1' },
+                { label: 'خالی', value: null, position: 'row2-col2' },
+                { label: '(7)', value: values['7'], position: 'row2-col3' },  // Box 7 moved here
+                { label: '(6)', value: values['6'], position: 'row3-col1' },  // Box 6 moved here
+                { label: '(4)', value: values['4'], position: 'row3-col2' },
+                { label: '(2)', value: values['2'], position: 'row3-col3' }
+            ];
+        }
+
+        // Render Triangle Grid
+        function renderTriangleGrid(targetNumber) {
+            const container = document.getElementById('triangle-grid');
+            if (!container) return;
+            
+            if (targetNumber === 0) {
+                container.innerHTML = '<div style="text-align:center; padding:50px; grid-column:span 3; color:var(--gold)">عدد درج کریں</div>';
+                const calcDemo = document.getElementById('calc-demo');
+                calcDemo.innerHTML = 'عدد درج کریں';
+                return;
+            }
+            
+            const gridData = generateMagicGrid(targetNumber);
+            if (!gridData) return;
+            
+            let html = '';
+            gridData.forEach(cell => {
+                if (cell.value === null) {
+                    html += `
+                        <div class="grid-cell empty">
+                            <div class="cell-number">⚡</div>
+                            <div class="cell-label">${cell.label}</div>
+                            
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="grid-cell">
+                            <div class="cell-number">${toPersianNumber(cell.value)}</div>
+                            <div class="cell-label">${cell.label}</div>
+                        </div>
+                    `;
+                }
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Zoom functionality
+        let isZoomed = false;
+        function zoomGrid() {
+            const container = document.getElementById('magic-grid');
+            if (isZoomed) {
+                container.style.transform = 'scale(1)';
+                isZoomed = false;
+            } else {
+                container.style.transform = 'scale(1.5)';
+                isZoomed = true;
+            }
+        }
+
+       // PDF Download
+        document.getElementById('download-pdf').addEventListener('click', function() {
+            const element = document.getElementById('main-content');
+            const opt = {
+                margin: [0.5, 0.5, 0.5, 0.5],
+                filename: 'Ism-e-Azam_Triangle.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 1.5, letterRendering: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        });
+
+        // Recitation Method
+        function calculateRecitationMethod(totalAbjad) {
+            if (totalAbjad === 0) return "کوئی عدد درج کریں";
+            let daroodCount = totalAbjad % 9;
+            if (daroodCount === 0) daroodCount = 9;
+            const timeRemainder = totalAbjad % 5;
+            const times = {1:"فجر کے بعد",2:"ظہر کے بعد",3:"عصر کے بعد",4:"مغرب کے بعد",0:"عشاء کے بعد"};
+            const dayRemainder = totalAbjad % 7;
+            const days = {1:"سوموار (پیر)",2:"منگل",3:"بدھ",4:"جمعرات",5:"جمعہ",6:"ہفتہ",0:"اتوار"};
+            const digitSum = totalAbjad.toString().split('').reduce((s,d)=>s+parseInt(d),0);
+            return `<p><strong>📿 درود پاک:</strong> ${daroodCount} مرتبہ</p>
+                    <p><strong>⏰ وقت:</strong> ${times[timeRemainder]}</p>
+                    <p><strong>📖 تعداد:</strong> ${totalAbjad} مرتبہ روزانہ</p>
+                    <p><strong>🌙 آغاز ذکر:</strong> ${days[dayRemainder]}</p>
+                    <p><strong>✨ اختیاری:</strong> ${digitSum} مرتبہ روزانہ</p>`;
+        }
+
+          // Asma Ul Husna Dataset
+        const asmaUlHusna = [
+            {name: "الرحمن", value: 298, description: "وہ ذات جو بے انتہا رحم کرنے والی ہے، جس کی رحمت ہر چیز کو گھیرے ہوئے ہے"},
+            {name: "الرحیم", value: 258, description: "وہ ذات جو ہمیشہ رحم کرنے والی ہے، خاص رحمت والی"},
+            {name: "الملک", value: 90, description: "وہ ذات جو تمام کائنات کی بادشاہت کی مالک ہے"},
+            {name: "القدوس", value: 170, description: "وہ ذات جو ہر عیب اور نقص سے پاک ہے"},
+            {name: "السلام", value: 131, description: "وہ ذات جو ہر آفت اور نقصان سے سلامتی والی ہے"},
+            {name: "المؤمن", value: 137, description: "وہ ذات جو امن دینے والی ہے، اپنے بندوں کو اطمینان بخشتی ہے"},
+            {name: "الہادی", value: 37, description: "وہ ذات جو ہدایت دینے والی ہے، راہ راست دکھانے والی"},
+            {name: "الاول", value: 37, description: "وہ ذات جو ہر چیز سے پہلے موجود ہے"},
+            {name: "الآخر", value: 802, description: "وہ ذات جو ہر چیز کے بعد باقی رہنے والی ہے"},
+            {name: "الظاہر", value: 1106, description: "وہ ذات جو اپنی نشانیوں سے ظاہر ہے"},
+            {name: "الباطن", value: 62, description: "وہ ذات جو باطن کی نگاہوں سے پوشیدہ ہے"},
+            {name: "الخالق", value: 731, description: "وہ ذات جو ہر چیز کو پیدا کرنے والی ہے"},
+            {name: "الباری", value: 213, description: "وہ ذات جو ہر چیز کو درست بنانے والی ہے"},
+            {name: "المصور", value: 336, description: "وہ ذات جو ہر چیز کو صورت دینے والی ہے"},
+            {name: "الغفار", value: 1281, description: "وہ ذات جو بڑی بخشش کرنے والی ہے"},
+            {name: "اللطیف", value: 129, description: "وہ ذات جو باریک بین ہے، نرمی کرنے والی"},
+            {name: "الحکیم", value: 78, description: "وہ ذات جو کامل حکمت والی ہے"},
+            {name: "الودود", value: 48, description: "وہ ذات جو محبت کرنے والی ہے"},
+            {name: "المجید", value: 57, description: "وہ ذات جو بزرگی اور عظمت والی ہے"},
+            {name: "الحی", value: 18, description: "وہ ذات جو زندہ و جاوید ہے"},
+            {name: "القیوم", value: 156, description: "وہ ذات جو خود قائم ہے اور سب کو قائم رکھنے والی ہے"},
+            {name: "الوھاب", value: 14, description: "وہ ذات جو بے حساب عطا کرنے والی ہے"},
+            {name: "الرزاق", value: 308, description: "وہ ذات جو رزق دینے والی ہے"},
+            {name: "الفتاح", value: 489, description: "وہ ذات جو ہر مشکل کو کھولنے والی ہے"},
+            {name: "العلیم", value: 150, description: "وہ ذات جو ہر چیز کا علم رکھنے والی ہے"},
+            {name: "القابض", value: 903, description: "وہ ذات جو رزق کو روک لینے والی ہے"},
+            {name: "الباسط", value: 72, description: "وہ ذات جو رزق کو فراخ کرنے والی ہے"},
+            {name: "الخافض", value: 1481, description: "وہ ذات جو جس کو چاہے پست کر دے"},
+            {name: "الرافع", value: 351, description: "وہ ذات جو جس کو چاہے بلند کر دے"},
+            {name: "المعز", value: 117, description: "وہ ذات جو جس کو چاہے عزت دے"},
+            {name: "المذل", value: 770, description: "وہ ذات جو جس کو چاہے ذلیل کر دے"},
+            {name: "السمیع", value: 180, description: "وہ ذات جو ہر آواز سننے والی ہے"},
+            {name: "البصیر", value: 302, description: "وہ ذات جو ہر چیز دیکھنے والی ہے"},
+            {name: "الحکم", value: 68, description: "وہ ذات جو فیصلہ کرنے والی ہے"},
+            {name: "العدل", value: 104, description: "وہ ذات جو کامل انصاف کرنے والی ہے"},
+            {name: "الخبیر", value: 812, description: "وہ ذات جو ہر چیز سے باخبر ہے"},
+            {name: "الحلیم", value: 88, description: "وہ ذات جو بردبار ہے، جلدی غصہ نہیں کرتی"},
+            {name: "العظیم", value: 1020, description: "وہ ذات جو بے انتہا عظمت والی ہے"},
+            {name: "الغفور", value: 1286, description: "وہ ذات جو بڑی مغفرت کرنے والی ہے"},
+            {name: "الشکور", value: 526, description: "وہ ذات جو تھوڑی عبادت کا بڑا بدلہ دیتی ہے"},
+            {name: "العلی", value: 110, description: "وہ ذات جو بلند ترین ہے"},
+            {name: "الکبیر", value: 232, description: "وہ ذات جو سب سے بڑی ہے"},
+            {name: "الحفیظ", value: 998, description: "وہ ذات جو ہر چیز کی حفاظت کرنے والی ہے"},
+            {name: "المقیت", value: 550, description: "وہ ذات جو رزق دینے اور حساب لینے والی ہے"},
+            {name: "الحسیب", value: 80, description: "وہ ذات جو حساب لینے کے لیے کافی ہے"},
+            {name: "الجلیل", value: 73, description: "وہ ذات جو عظمت اور بزرگی والی ہے"},
+            {name: "الکریم", value: 270, description: "وہ ذات جو سب سے زیادہ کرم کرنے والی ہے"},
+            {name: "الرقیب", value: 312, description: "وہ ذات جو ہر چیز پر نگران ہے"},
+            {name: "المجیب", value: 55, description: "وہ ذات جو دعائیں قبول کرنے والی ہے"},
+            {name: "الواسع", value: 137, description: "وہ ذات جو وسعت والی ہے، ہر چیز پر محیط ہے"},
+            {name: "الباعث", value: 573, description: "وہ ذات جو مردوں کو زندہ کرنے والی ہے"},
+            {name: "الشہید", value: 319, description: "وہ ذات جو ہر چیز پر گواہ ہے"},
+            {name: "الحق", value: 108, description: "وہ ذات جو برحق ہے"},
+            {name: "الوکیل", value: 66, description: "وہ ذات جو کام سنبھالنے کے لیے کافی ہے"},
+            {name: "القوی", value: 116, description: "وہ ذات جو سب سے زیادہ طاقتور ہے"},
+            {name: "المتین", value: 500, description: "وہ ذات جو مضبوط اور مستحکم ہے"},
+            {name: "الولی", value: 46, description: "وہ ذات جو دوست اور مددگار ہے"},
+            {name: "الحمید", value: 62, description: "وہ ذات جو تمام تعریفوں کی مستحق ہے"},
+            {name: "المحصی", value: 148, description: "وہ ذات جو ہر چیز کا شمار کرنے والی ہے"},
+            {name: "المبدی", value: 57, description: "وہ ذات جو پہلی بار پیدا کرنے والی ہے"},
+            {name: "المعید", value: 124, description: "وہ ذات جو دوبارہ زندہ کرنے والی ہے"},
+            {name: "المحیی", value: 68, description: "وہ ذات جو زندگی دینے والی ہے"},
+            {name: "الممیت", value: 490, description: "وہ ذات جو موت دینے والی ہے"},
+            {name: "الواجد", value: 14, description: "وہ ذات جو ہر چیز پانے والی ہے"},
+            {name: "الماجد", value: 57, description: "وہ ذات جو بزرگی اور عظمت والی ہے"},
+            {name: "الواحد", value: 19, description: "وہ ذات جو یکتا اور بے مثل ہے"},
+            {name: "الصمد", value: 134, description: "وہ ذات جو بے نیاز ہے اور سب کی ضرورتیں پوری کرتی ہے"},
+            {name: "القادر", value: 305, description: "وہ ذات جو ہر چیز پر قادر ہے"},
+            {name: "المقتدر", value: 744, description: "وہ ذات جو کامل قدرت والی ہے"},
+            {name: "المقدم", value: 184, description: "وہ ذات جو جس کو چاہے آگے کر دے"},
+            {name: "المؤخر", value: 846, description: "وہ ذات جو جس کو چاہے پیچھے کر دے"},
+            {name: "الوالي", value: 47, description: "وہ ذات جو کارساز اور مددگار ہے"},
+            {name: "المتعال", value: 551, description: "وہ ذات جو بلند و برتر ہے"},
+            {name: "البر", value: 202, description: "وہ ذات جو بھلائی کرنے والی ہے"},
+            {name: "التواب", value: 409, description: "وہ ذات جو توبہ قبول کرنے والی ہے"},
+            {name: "المنتقم", value: 630, description: "وہ ذات جو ظالموں سے بدلہ لینے والی ہے"},
+            {name: "العفو", value: 156, description: "وہ ذات جو درگزر کرنے والی ہے"},
+            {name: "الرؤوف", value: 292, description: "وہ ذات جو نرمی کرنے والی ہے"},
+            {name: "مالک الملک", value: 212, description: "وہ ذات جو تمام بادشاہت کی مالک ہے"},
+            {name: "ذو الجلال والإکرام", value: 1108, description: "وہ ذات جو عظمت اور اکرام والی ہے"},
+            {name: "المقسط", value: 539, description: "وہ ذات جو انصاف کرنے والی ہے"},
+            {name: "الجامع", value: 114, description: "وہ ذات جو جمع کرنے والی ہے"},
+            {name: "الغنی", value: 1060, description: "وہ ذات جو بے نیاز ہے"},
+            {name: "المغنی", value: 1100, description: "وہ ذات جو غنی بنانے والی ہے"},
+            {name: "المانع", value: 161, description: "وہ ذات جو روکنے والی ہے"},
+            {name: "الضار", value: 1001, description: "وہ ذات جو نقصان پہنچانے والی ہے"},
+            {name: "النافع", value: 201, description: "وہ ذات جو نفع پہنچانے والی ہے"},
+            {name: "النور", value: 256, description: "وہ ذات جو نور والی ہے"},
+            {name: "البدیع", value: 86, description: "وہ ذات جو بے مثال چیز پیدا کرنے والی ہے"},
+            {name: "الباقی", value: 113, description: "وہ ذات جو ہمیشہ باقی رہنے والی ہے"},
+            {name: "الوارث", value: 707, description: "وہ ذات جو سب کے بعد باقی رہنے والی ہے"},
+            {name: "الرشید", value: 514, description: "وہ ذات جو راہ راست دکھانے والی ہے"},
+            {name: "الصبور", value: 298, description: "وہ ذات جو بڑے صبر والی ہے"}
+        ];
+
+
+        function calculateIsm(val) {
+            const container = document.getElementById('virtues-container');
+            const ismDisplay = document.getElementById('ism-e-azam');
+            container.innerHTML = "";
+            if (val === 0) { ismDisplay.innerText = "-"; return; }
+            
+            let exactMatches = asmaUlHusna.filter(a => a.value === val);
+            let pairMatches = [], tripleMatches = [];
+            
+            if (exactMatches.length === 0) {
+                for (let i=0; i<asmaUlHusna.length; i++) {
+                    for (let j=i+1; j<asmaUlHusna.length; j++) {
+                        if (asmaUlHusna[i].value + asmaUlHusna[j].value === val) {
+                            pairMatches.push([asmaUlHusna[i], asmaUlHusna[j]]);
+                        }
+                    }
+                }
+            }
+            
+            if (exactMatches.length === 0 && pairMatches.length === 0) {
+                for (let i=0; i<asmaUlHusna.length; i++) {
+                    for (let j=i+1; j<asmaUlHusna.length; j++) {
+                        for (let k=j+1; k<asmaUlHusna.length; k++) {
+                            if (asmaUlHusna[i].value + asmaUlHusna[j].value + asmaUlHusna[k].value === val) {
+                                tripleMatches.push([asmaUlHusna[i], asmaUlHusna[j], asmaUlHusna[k]]);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            let html = '';
+            if (exactMatches.length > 0) {
+                html += `<div class="combination-section"><div class="combination-title">✨ اسماء حسنیٰ (انفرادی) ✨</div><div class="combination-grid">`;
+                exactMatches.forEach(m => { html += `<div class="combination-item"><div class="combination-names">${m.name}</div><div class="virtues-list"><strong>فضائل:</strong> ${m.description}</div></div>`; });
+                html += `</div></div>`;
+                ismDisplay.innerText = exactMatches.map(m=>m.name).join(" / ");
+            } else if (pairMatches.length > 0) {
+                html += `<div class="combination-section"><div class="combination-title">🔗 دو اسماء کے مجموعے 🔗</div><div class="combination-grid">`;
+                pairMatches.forEach(p => { html += `<div class="combination-item"><div class="combination-names">${p.map(m=>m.name).join(" + ")}</div><div class="virtues-list"><strong>فضائل:</strong><br>${p.map(m=>`• ${m.description}`).join("<br>")}</div></div>`; });
+                html += `</div></div>`;
+                ismDisplay.innerText = pairMatches[0].map(m=>m.name).join(" + ");
+            } else if (tripleMatches.length > 0) {
+                html += `<div class="combination-section"><div class="combination-title">🌟 تین اسماء کے مجموعے 🌟</div><div class="combination-grid">`;
+                tripleMatches.forEach(t => { html += `<div class="combination-item"><div class="combination-names">${t.map(m=>m.name).join(" + ")}</div><div class="virtues-list"><strong>فضائل:</strong><br>${t.map(m=>`• ${m.description}`).join("<br>")}</div></div>`; });
+                html += `</div></div>`;
+                ismDisplay.innerText = tripleMatches[0].map(m=>m.name).join(" + ");
+            } else {
+                html = `<div class="virtue-card" style="text-align:center;"><p style="color:#ff6b6b;">کوئی اسم اعظم نہیں ملا</p></div>`;
+                ismDisplay.innerText = "کوئی اسم نہیں ملا";
+            }
+            container.innerHTML = html;
+        }
+
+        // Abjad Values
+        const abjadValues = {
+            'ا':1,'آ':1,'أ':1,'إ':1,'ء':1,'ئ':1,'ب':2,'پ':2,'ج':3,'چ':3,'د':4,'ڈ':4,'ہ':5,'ھ':5,'ه':5,'و':6,'ؤ':6,'ز':7,'ژ':7,'ذ':7,'ض':800,'ظ':900,'ح':8,'ط':9,'ی':10,'ے':10,'ي':10,'ک':20,'ك':20,'گ':20,'ل':30,'م':40,'ن':50,'ں':50,'س':60,'ص':90,'ث':500,'ع':70,'ف':80,'ق':100,'ر':200,'ش':300,'ت':400,'ٹ':400,'خ':600,'غ':1000
+        };
+
+        // Input handler
+        const input = document.getElementById('urdu-input');
+        input.addEventListener('input', function() {
+            const text = this.value.replace(/\s/g, '');
+            document.getElementById('total-chars').innerText = text.length;
+            let val = 0;
+            for(let char of text) val += abjadValues[char] || 0;
+            document.getElementById('abjad-value').innerText = val;
+            document.getElementById('recitation-method').innerHTML = calculateRecitationMethod(val);
+            calculateIsm(val);
+            renderTriangleGrid(val);
+        });
+
+        // Splash screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('splash-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('splash-screen').style.display = 'none';
+                    document.getElementById('main-content').style.opacity = '1';
+                    document.getElementById('main-content').style.transform = 'translateY(0)';
+                }, 800);
+            }, 3000);
+            renderTriangleGrid(0);
+        });
+    </script>
+</body>
+</html>
